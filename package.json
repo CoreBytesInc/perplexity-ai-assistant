@@ -4,11 +4,23 @@
   "displayName": "Perplexity AI Assistant",
   "description": "AI powered coding assistant using Perplexity",
   "version": "0.0.9",
-  "engines": {
-    "vscode": "^1.102.0"
-  },
+  "icon": "assets/logo.png",
   "categories": [
-    "Other"
+    "Snippets",
+    "AI",
+    "Programming Languages"
+  ],
+  "keywords": [
+    "AI",
+    "Assistant",
+    "Perplexity",
+    "ChatGPT",
+    "Coding",
+    "Code",
+    "Programming",
+    "Developer",
+    "Copilot",
+    "CoreBytes"
   ],
   "activationEvents": [],
   "repository": {
