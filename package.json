@@ -1,4 +1,5 @@
 {
+  "publisher": "CoreBytesInc",
   "name": "perplexity-ai-assistant",
   "displayName": "Perplexity AI Assistant",
   "description": "AI powered coding assistant using Perplexity",
