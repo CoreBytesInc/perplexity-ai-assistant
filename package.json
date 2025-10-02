@@ -5,6 +5,9 @@
   "description": "AI powered coding assistant using Perplexity",
   "version": "1.0.0",
   "icon": "assets/logo.png",
+  "engines": {
+    "vscode": "^1.102.0"
+  },
   "categories": [
     "Snippets",
     "AI",
