@@ -14,27 +14,13 @@ A powerful VS Code extension that brings Perplexity AI's capabilities directly i
   - Auto-detects current file and selected code
   - Manual file context addition support
   - Workspace-aware responses
-- �️ **Code Operations**:
-  - Explain selected code
-  - Find bugs in code
-  - Optimize code
-  - Generate code comments
-  - Code refactoring suggestions
-- ⚡ **Quick Access**:
-  - Convenient sidebar integration
-  - Command palette integration
-  - Right-click context menu
 - ⚙️ **Customization**:
   - Multiple Perplexity AI models support
   - Configurable model settings
   - API key management
 
 ### Coming Soon
-- 📊 **Advanced Code Analysis**: Deep code structure understanding and pattern recognition
-- 🔄 **Real-time Collaboration**: Share AI insights with team members
-- 📱 **Multi-language Support**: Enhanced support for more programming languages
-- 🎯 **Smart Code Generation**: Context-aware code suggestions and completions
-- 🔍 **Semantic Search**: Search through your codebase using natural language
+- 📊 **Agent Mode**: Context aware code analysis with direct file edit support.
 
 ## Installation
 
@@ -58,10 +44,6 @@ A powerful VS Code extension that brings Perplexity AI's capabilities directly i
 ## Privacy & Security
 
 This extension processes code and queries through Perplexity AI's secure API. Your code privacy is our priority, and all communications are handled with industry-standard security measures.
-
-## Contributing
-
-We welcome contributions! Please feel free to submit a Pull Request.
 
 ## Support
 
