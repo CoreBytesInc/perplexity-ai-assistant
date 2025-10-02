@@ -21,10 +21,10 @@ jobs:
         run: npm ci
       
       - name: Build
-        run: npm run build
+        run: npm run compile
         
       - name: Package Extension
-        run: npm run package
+        run: vsce package
         
       - name: Upload artifact
         uses: actions/upload-artifact@v4

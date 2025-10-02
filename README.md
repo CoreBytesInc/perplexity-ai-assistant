@@ -10,10 +10,6 @@ A powerful VS Code extension that brings Perplexity AI's capabilities directly i
 
 ### Currently Supported
 - 🤖 **AI-Powered Chat**: Engage in natural conversations about your code with Perplexity AI
-- � **Context-Aware Code Assistance**: 
-  - Auto-detects current file and selected code
-  - Manual file context addition support
-  - Workspace-aware responses
 - ⚙️ **Customization**:
   - Multiple Perplexity AI models support
   - Configurable model settings
