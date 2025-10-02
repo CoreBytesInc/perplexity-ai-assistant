@@ -2,7 +2,6 @@
 .github
 .gitignore
 node_modules
-out
 src
 tsconfig.json
 .eslintrc.json
