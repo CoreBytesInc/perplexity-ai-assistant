@@ -1103,7 +1103,7 @@ console.log("Querying Perplexity API with model:", model);
     </head>
     <body>
         <h3>Error loading webview files</h3>
-        <p>Please check that the webview files exist in src/webview/</p>
+        <p>Please check that the webview files exist in src/chatview/</p>
     </body>
     </html>`;
   }
