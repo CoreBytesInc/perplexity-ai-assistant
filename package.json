@@ -3,7 +3,7 @@
   "name": "perplexity-ai-assistant",
   "displayName": "Perplexity AI Assistant",
   "description": "AI powered coding assistant using Perplexity",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "icon": "assets/perplexity.png",
   "engines": {
     "vscode": "^1.102.0"
