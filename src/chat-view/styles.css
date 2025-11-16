@@ -11,6 +11,7 @@ body {
 .disabled {
     opacity: 0.7;
     pointer-events: none;
+    cursor: not-allowed;
 }
 
 .chat-container {
@@ -67,9 +68,13 @@ body {
 }
 
 @keyframes typing {
-    0%, 60%, 100% {
+
+    0%,
+    60%,
+    100% {
         opacity: 0.3;
     }
+
     30% {
         opacity: 1;
     }
@@ -110,19 +115,20 @@ body {
     position: relative;
 }
 
-.user > .message-content {
+.user>.message-content {
     display: flex;
     justify-content: flex-end;
 }
 
-.user > .message-content > p {
+.user>.message-content>p {
     padding: 2px 10px;
     background-color: var(--vscode-editor-background);
     border-radius: 2px;
     width: max-content;
 }
 
-.user > .message-actions, .user > .message-header {
+.user>.message-actions,
+.user>.message-header {
     display: none;
 }
 
@@ -156,12 +162,12 @@ body {
 
 .message-author {
     font-weight: 600;
-    font-size: 13px;
+    font-size: 12px;
     color: var(--vscode-foreground);
 }
 
 .message-time {
-    font-size: 11px;
+    font-size: 10px;
     color: var(--vscode-descriptionForeground);
     margin-left: auto;
 }
@@ -169,7 +175,7 @@ body {
 .message-content {
     color: var(--vscode-foreground);
     line-height: 1.6;
-    font-size: 13px;
+    font-size: 12px;
 }
 
 .message-content p {
@@ -319,7 +325,7 @@ body {
     align-items: center;
     padding: 8px 12px;
     border: 1px solid var(--vscode-dropdown-border);
-    border-radius: 6px;
+    border-radius: 4px;
     background-color: var(--vscode-editor-background);
     gap: 10px;
     width: calc(100% - 24px);
@@ -330,7 +336,7 @@ body {
 .bottom-container textarea {
     width: 100%;
     border: none;
-    font-size: 10px;
+    font-size: 11px;
     resize: none;
     background-color: transparent;
     color: var(--vscode-input-foreground);
@@ -343,7 +349,6 @@ body {
 
 .action-bar {
     display: flex;
-    flex-wrap: wrap;
     width: 100%;
     align-items: center;
     justify-content: space-between;
@@ -351,15 +356,22 @@ body {
     gap: 0.5rem;
 }
 
+.action-dropdowns {
+    display: flex;
+    justify-content: space-between;
+    gap: 0.5em;
+    flex-wrap: wrap;
+}
+
 .action-dropdown {
-    padding: 4px 8px;
+    padding: 4px;
     border: 1px solid var(--vscode-dropdown-border);
-    border-radius: 4px;
+    border-radius: 3px;
     background-color: var(--vscode-dropdown-background);
     color: var(--vscode-dropdown-foreground);
     font-size: 11px;
     cursor: pointer;
-    min-width: 100px;
+    min-width: 2rem;
 }
 
 .action-dropdown:focus {
@@ -371,7 +383,7 @@ body {
     display: flex;
     align-items: center;
     gap: 8px;
-    padding: 4px 8px;
+    padding: 4px;
 }
 
 .model-option .codicon {
@@ -399,25 +411,11 @@ body {
     height: 28px;
 }
 
-/* Style for the stop button */
-.action-bar button .stop-icon {
-    color: #ff5555;
-}
-
-/* Hover effect for stop button */
-.action-bar button:hover .stop-icon {
-    color: #ff3333;
-}
-
-.action-bar button:disabled {
-    opacity: 0.5;
-    cursor: not-allowed;
-}
-
 .action-bar button:hover:not(:disabled) {
     background-color: var(--vscode-button-hoverBackground);
 }
 
 .action-bar .codicon {
-    font-size: 16px;
+    font-size: 18px;
+    color: var(--vscode-icon-foreground);
 }

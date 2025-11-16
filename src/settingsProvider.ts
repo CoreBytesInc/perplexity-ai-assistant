@@ -6,7 +6,7 @@ export class PerplexitySettingsProvider {
   constructor(
     private readonly _extensionUri: vscode.Uri,
     private readonly _context: vscode.ExtensionContext
-  ) {}
+  ) { }
 
   public show() {
     if (this._panel) {
@@ -227,9 +227,10 @@ export class PerplexitySettingsProvider {
                 <div class="form-row">
                     <label for="model">Default Model</label>
                     <select id="model">
-                        <option value="llama-3.1-sonar-small-128k-online">Sonar Small (Cost-effective)</option>
-                        <option value="llama-3.1-sonar-large-128k-online">Sonar Large (Balanced)</option>
-                        <option value="llama-3.1-sonar-huge-128k-online">Sonar Huge (Most capable)</option>
+                        <option value="sonar">Sonar</option>
+                        <option value="sonar-pro">Sonar Pro</option>
+                        <option value="sonar-reasoning">Sonar Reasoning</option>
+                        <option value="sonar-reasoning-pro">Sonar Reasoning Pro</option>
                     </select>
                     <div class="description">Choose the model that best fits your needs and budget</div>
                 </div>
@@ -240,17 +241,6 @@ export class PerplexitySettingsProvider {
                 </div>
                 <button onclick="saveSettings()">Save Settings</button>
                 <div id="settingsStatus" class="status-message"></div>
-            </div>
-
-            <div class="settings-group">
-                <h2>Usage Information</h2>
-                <p>This extension uses the Perplexity API to provide AI-powered assistance. API usage is charged per token by Perplexity.</p>
-                <p><strong>Pricing:</strong></p>
-                <ul>
-                    <li>Sonar Small: $1/$1 per million input/output tokens</li>
-                    <li>Sonar Large: $1/$1 per million input/output tokens</li>
-                    <li>Sonar Huge: $5/$5 per million input/output tokens</li>
-                </ul>
             </div>
 
             <script>

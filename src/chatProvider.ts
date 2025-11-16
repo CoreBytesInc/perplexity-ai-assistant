@@ -15,8 +15,7 @@ export interface ChatSession {
 }
 
 export class PerplexityCustomChatProvider
-  implements vscode.WebviewViewProvider
-{
+  implements vscode.WebviewViewProvider {
   public static readonly viewType = "perplexity-chatView";
   private _view?: vscode.WebviewView;
   private _sessions: ChatSession[] = [];
@@ -29,7 +28,6 @@ export class PerplexityCustomChatProvider
     private readonly _extensionUri: vscode.Uri,
     private readonly _context: vscode.ExtensionContext
   ) {
-    console.log("PerplexityCustomChatProvider constructor called");
     this.loadChatHistory();
   }
 
@@ -38,7 +36,6 @@ export class PerplexityCustomChatProvider
     context: vscode.WebviewViewResolveContext,
     _token: vscode.CancellationToken
   ) {
-    console.log("Resolving webview view for Perplexity chat");
     this._view = webviewView;
 
     webviewView.webview.options = {
@@ -46,13 +43,10 @@ export class PerplexityCustomChatProvider
       localResourceRoots: [this._extensionUri],
     };
 
-    // Set the HTML content
-    console.log("Setting HTML content for webview");
     webviewView.webview.html = this._getHtmlForWebview(webviewView.webview);
 
     // Handle messages from webview
     webviewView.webview.onDidReceiveMessage(async (data) => {
-      console.log("Received message from webview:", data.type);
       try {
         switch (data.type) {
           case "sendMessage":
@@ -99,9 +93,7 @@ export class PerplexityCustomChatProvider
     });
 
     // Load existing chat on startup
-    console.log("Scheduling initial webview update");
     setTimeout(() => {
-      console.log("Performing initial webview update");
       this.updateWebview();
       // Auto-detect context on startup
       this.handleAutoDetectContext();
@@ -345,20 +337,12 @@ export class PerplexityCustomChatProvider
 
   private updateWebview(showTyping: boolean = false) {
     if (!this._view || !this._view.webview) {
-      console.log("Webview not ready, skipping update");
       return;
     }
 
     try {
       const session = this._sessions.find(
         (s) => s.id === this._currentSessionId
-      );
-
-      console.log(
-        "Updating webview with session:",
-        this._currentSessionId,
-        "Messages:",
-        session?.messages?.length || 0
       );
 
       this._view.webview.postMessage({
@@ -385,13 +369,10 @@ export class PerplexityCustomChatProvider
 
   private handleModeChange(mode: string) {
     this._currentMode = mode;
-    console.log(`Mode changed to: ${mode}`);
-    // You can add mode-specific logic here
   }
 
   private handleModelChange(model: string) {
     this._currentModel = model;
-    console.log(`Model changed to: ${model}`);
     // Update the model in workspace configuration
     const config = vscode.workspace.getConfiguration("perplexityAI");
     config.update("model", model, vscode.ConfigurationTarget.Global);
@@ -408,7 +389,6 @@ export class PerplexityCustomChatProvider
   ): Promise<string> {
     // Use the current model selection
     const model = this._currentModel;
-console.log("Querying Perplexity API with model:", model);
     const response = await fetch("https://api.perplexity.ai/chat/completions", {
       method: "POST",
       headers: {
@@ -434,7 +414,6 @@ console.log("Querying Perplexity API with model:", model);
       return "No response received";
     } else {
       const data: any = await response.json();
-      console.log("Received response data from model", this._currentModel, data.choices[0]?.message?.content);
       return data.choices[0]?.message?.content || "No response received";
     }
   }
@@ -514,7 +493,6 @@ console.log("Querying Perplexity API with model:", model);
 
   private saveChatHistory() {
     this._context.globalState.update("perplexity-chat-history", this._sessions);
-    console.log("Chat history saved:", this._sessions.length, "sessions");
   }
 
   private loadChatHistory() {
@@ -739,7 +717,6 @@ console.log("Querying Perplexity API with model:", model);
         // Get the file icon URI from VS Code
         const fileUri = vscode.Uri.file(filePath);
         const iconUri = await this.getFileIconUri(fileUri);
-        console.log(`File: ${fileName}, Icon URI: ${iconUri}`);
 
         this.attachedContext.push({
           id: Date.now().toString() + Math.random(),
@@ -757,8 +734,6 @@ console.log("Querying Perplexity API with model:", model);
           type: "contextAttached",
           context: this.attachedContext,
         });
-      } else {
-        console.log("File already in context:", filePath);
       }
     } catch (error) {
       console.error(`Error reading file ${filePath}:`, error);
@@ -782,7 +757,6 @@ console.log("Querying Perplexity API with model:", model);
     // Get the file icon URI from VS Code
     const fileUri = vscode.Uri.file(document.fileName);
     const iconUri = await this.getFileIconUri(fileUri);
-    console.log(`Current file: ${fileName}, Icon URI: ${iconUri}`);
 
     return {
       id: Date.now().toString(),
@@ -855,13 +829,8 @@ console.log("Querying Perplexity API with model:", model);
       const fileName = fileUri.path.split("/").pop() || "";
       const extension = fileName.split(".").pop()?.toLowerCase() || "";
 
-      console.log(
-        `Looking for icon for file: ${fileName}, extension: ${extension}`
-      );
-
       // Find the Material Icon Theme extension with more thorough search
       const allExtensions = vscode.extensions.all;
-      console.log(`Total extensions found: ${allExtensions.length}`);
 
       // Try multiple ways to find the extension
       let materialIconExt = allExtensions.find(
@@ -881,26 +850,15 @@ console.log("Querying Perplexity API with model:", model);
         );
       }
 
-      console.log(`Material Icon Theme extension found: ${!!materialIconExt}`);
-
       if (materialIconExt) {
-        console.log(`Extension ID: ${materialIconExt.id}`);
-        console.log(`Extension path: ${materialIconExt.extensionPath}`);
-        console.log(
-          `Extension URI: ${materialIconExt.extensionUri.toString()}`
-        );
-        console.log(`Extension active: ${materialIconExt.isActive}`);
 
         // Try to activate the extension if it's not active
         if (!materialIconExt.isActive) {
-          console.log("Activating Material Icon Theme extension...");
           await materialIconExt.activate();
         }
       }
 
       if (!materialIconExt || !this._view) {
-        console.log("Material Icon Theme not found or webview not ready");
-        console.log(`Webview ready: ${!!this._view}`);
 
         // Return a simple test icon to see if the problem is with icon loading or CSS
         if (this._view) {
@@ -914,7 +872,6 @@ console.log("Querying Perplexity API with model:", model);
           const dataUri = `data:image/svg+xml;base64,${Buffer.from(
             testSvg
           ).toString("base64")}`;
-          console.log(`Using test icon: ${dataUri.substring(0, 50)}...`);
           return dataUri;
         }
 
@@ -964,8 +921,6 @@ console.log("Querying Perplexity API with model:", model);
         iconName = materialIconMap[extension] || "file";
       }
 
-      console.log(`Mapped icon name: ${iconName}`);
-
       // Construct the icon path within the Material Icon Theme extension
       const iconPath = vscode.Uri.joinPath(
         materialIconExt.extensionUri,
@@ -973,12 +928,9 @@ console.log("Querying Perplexity API with model:", model);
         `${iconName}.svg`
       );
 
-      console.log(`Full icon path: ${iconPath.toString()}`);
-
       // Check if the icon file exists
       try {
         await vscode.workspace.fs.stat(iconPath);
-        console.log(`Icon file exists at: ${iconPath.toString()}`);
       } catch (error) {
         console.warn(`Icon file does not exist: ${iconPath.toString()}`);
         // Try fallback to 'file' icon
@@ -989,7 +941,6 @@ console.log("Querying Perplexity API with model:", model);
         );
         try {
           await vscode.workspace.fs.stat(fallbackIconPath);
-          console.log(`Using fallback icon: ${fallbackIconPath.toString()}`);
           const webviewUri = this._view.webview.asWebviewUri(fallbackIconPath);
           return webviewUri.toString();
         } catch (fallbackError) {
@@ -1012,9 +963,6 @@ console.log("Querying Perplexity API with model:", model);
 
       // Convert to webview URI
       const webviewUri = this._view.webview.asWebviewUri(iconPath);
-      console.log(
-        `Icon for ${fileName}: ${iconName}.svg -> ${webviewUri.toString()}`
-      );
       return webviewUri.toString();
     } catch (error) {
       console.warn("Failed to get file icon:", error);

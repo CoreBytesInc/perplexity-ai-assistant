@@ -37,7 +37,7 @@
         {
           "id": "perplexity-chat",
           "title": "Perplexity AI",
-          "icon": "$(comment-discussion)"
+          "icon": "assets/perplexity.svg"
         }
       ]
     },

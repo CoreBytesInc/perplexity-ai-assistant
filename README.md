@@ -30,7 +30,7 @@ A powerful VS Code extension that brings Perplexity AI's capabilities directly i
 
 1. Click on the Perplexity AI icon in the Activity Bar (sidebar)
 2. Click on settings option on the top, and set the api key first.
-3. Perplexity api key can be generated for free at https://www.perplexity.ai/account/api/keys
+3. Perplexity api key can be generated for free at [Perplexity API Key](https://www.perplexity.ai/account/api/keys)
 2. Start a new chat session in the dedicated chat view
 3. Ask questions
 4. View AI responses directly in the chat interface
@@ -47,10 +47,10 @@ If you encounter any issues or have suggestions for improvements, please [open a
 ## About
 
 Developed by [CoreBytes Inc](https://github.com/CoreBytesInc), this extension aims to enhance your coding experience with the power of Perplexity AI.
+Developer: [Bhargava A](https://bhargava73.github.io/)
 
 **Enjoying the extension?** Please leave a ⭐ review on the [VS Code Marketplace](https://marketplace.visualstudio.com/items?itemName=CoreBytesInc.perplexity-ai-assistant)!
 
 ## Credits
 
-- Logo icon by [Icons8](https://icons8.com) - [Perplexity AI icon](https://icons8.com/icon/kzJWN5jCDzpq/perplexity-ai)
-
+- Icons by [Lobehub](https://lobehub.com/icons/perplexity)

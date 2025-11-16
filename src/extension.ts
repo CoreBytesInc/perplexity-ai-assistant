@@ -1,31 +1,21 @@
-// The module 'vscode' contains the VS Code extensibility API
-// Import the module and reference it with the alias vscode in your code below
-
 import * as vscode from "vscode";
 import { PerplexityCustomChatProvider } from "./chatProvider";
 import { PerplexitySettingsProvider } from "./settingsProvider";
 import * as path from "path";
 
 export function activate(context: vscode.ExtensionContext) {
-  console.log("Perplexity AI extension is now active!");
-
-  // Set context variable
   vscode.commands.executeCommand("setContext", "perplexity-ai.enabled", true);
-
   // Initialize providers
-  console.log("Initializing chat provider");
   const chatProvider = new PerplexityCustomChatProvider(
     context.extensionUri,
     context
   );
-  console.log("Initializing settings provider");
   const settingsProvider = new PerplexitySettingsProvider(
     context.extensionUri,
     context
   );
 
   // Register webview providers
-  console.log("Registering webview view provider");
   const registration = vscode.window.registerWebviewViewProvider(
     PerplexityCustomChatProvider.viewType,
     chatProvider,
@@ -36,7 +26,6 @@ export function activate(context: vscode.ExtensionContext) {
     }
   );
   context.subscriptions.push(registration);
-  console.log("Webview view provider registered successfully");
 
   // Register commands
   const commands = [
@@ -44,24 +33,19 @@ export function activate(context: vscode.ExtensionContext) {
       askPerplexity(context)
     ),
     vscode.commands.registerCommand("perplexity-ai.testView", async () => {
-      console.log("Testing view command called");
       await vscode.commands.executeCommand(
         "workbench.view.extension.perplexity-chat"
       );
-      console.log("View command completed");
     }),
     vscode.commands.registerCommand("perplexity-ai.showView", async () => {
-      console.log("Show view command called - forcing view to be visible");
       try {
-        // Try to force the view to show
         await vscode.commands.executeCommand(
           "workbench.view.extension.perplexity-chat"
         );
         await new Promise((resolve) => setTimeout(resolve, 200));
         await vscode.commands.executeCommand("perplexity-chatView.focus");
-        console.log("View should now be visible and focused");
       } catch (error) {
-        console.log("Error showing view:", error);
+        console.error("Error showing view:", error);
       }
     }),
     vscode.commands.registerCommand("perplexity-ai.askStreaming", () =>
@@ -93,33 +77,20 @@ export function activate(context: vscode.ExtensionContext) {
       settingsProvider.show()
     ),
     vscode.commands.registerCommand("perplexity-ai.newChat", async () => {
-      console.log("newChat command called");
-
-      // First try to ensure the activity bar view container is shown
       try {
-        console.log("Attempting to show activity bar view container");
         await vscode.commands.executeCommand(
           "workbench.view.extension.perplexity-chat"
         );
-        console.log("Activity bar view container command completed");
       } catch (error) {
-        console.log("Could not show activity bar view container:", error);
+        console.error("Could not show activity bar view container:", error);
       }
-
-      // Wait a moment for the view to initialize
+      // Wait a moment to ensure the view is ready
       await new Promise((resolve) => setTimeout(resolve, 500));
-
-      // Then try to focus the specific view
       try {
-        console.log("Attempting to focus perplexity-chatView");
         await vscode.commands.executeCommand("perplexity-chatView.focus");
-        console.log("Focus command completed");
       } catch (error) {
-        console.log("Could not focus view:", error);
+        console.error("Could not focus view:", error);
       }
-
-      // Start a new chat
-      console.log("Starting new chat");
       chatProvider.startNewChat();
     }),
     vscode.commands.registerCommand("perplexity-ai.clearHistory", () => {
@@ -143,7 +114,6 @@ export function activate(context: vscode.ExtensionContext) {
   context.subscriptions.push(...commands);
 }
 
-// Enhanced code analysis functions
 async function optimizeCode(context: vscode.ExtensionContext) {
   const editor = vscode.window.activeTextEditor;
   if (!editor) return;
@@ -240,7 +210,6 @@ ${selectedText}
   await executeCodeCommand(apiKey, prompt, "Code Refactoring");
 }
 
-// Helper function for code-related commands
 async function executeCodeCommand(
   apiKey: string,
   prompt: string,
@@ -263,7 +232,6 @@ async function executeCodeCommand(
   );
 }
 
-// Updated explainSelectedCode to use the helper
 async function explainSelectedCode(context: vscode.ExtensionContext) {
   const editor = vscode.window.activeTextEditor;
   if (!editor) return;
@@ -288,7 +256,6 @@ ${selectedText}
   await executeCodeCommand(apiKey, prompt, "Code Explanation");
 }
 
-// API Key management
 async function getApiKey(
   context: vscode.ExtensionContext
 ): Promise<string | undefined> {
@@ -340,7 +307,6 @@ async function askPerplexity(context: vscode.ExtensionContext) {
   );
 }
 
-// Main ask function
 async function askPerplexityWithStreaming(context: vscode.ExtensionContext) {
   const apiKey = await getApiKey(context);
   if (!apiKey) {
@@ -445,7 +411,7 @@ async function askWithFileContext(context: vscode.ExtensionContext) {
     const truncatedContent =
       fileContent.length > maxContentLength
         ? fileContent.substring(0, maxContentLength) +
-          "\n\n... (file truncated)"
+        "\n\n... (file truncated)"
         : fileContent;
 
     contextPrompt = `I'm working on a ${language} file called "${fileName}". Here's the current file content:
@@ -492,7 +458,6 @@ async function askWithWorkspaceContext(context: vscode.ExtensionContext) {
 
   if (!question) return;
 
-  // Get workspace information
   const workspaceFolders = vscode.workspace.workspaceFolders;
   if (!workspaceFolders) {
     vscode.window.showWarningMessage("No workspace folder open");
@@ -500,7 +465,6 @@ async function askWithWorkspaceContext(context: vscode.ExtensionContext) {
   }
 
   try {
-    // Get package.json if it exists
     const packageJsonUri = vscode.Uri.joinPath(
       workspaceFolders[0].uri,
       "package.json"
@@ -513,12 +477,10 @@ async function askWithWorkspaceContext(context: vscode.ExtensionContext) {
       projectInfo = `Project: ${packageData.name || "Unknown"}
 Description: ${packageData.description || "No description"}
 Version: ${packageData.version || "Unknown"}
-Dependencies: ${
-        Object.keys(packageData.dependencies || {}).join(", ") || "None"
-      }
-Dev Dependencies: ${
-        Object.keys(packageData.devDependencies || {}).join(", ") || "None"
-      }`;
+Dependencies: ${Object.keys(packageData.dependencies || {}).join(", ") || "None"
+        }
+Dev Dependencies: ${Object.keys(packageData.devDependencies || {}).join(", ") || "None"
+        }`;
     } catch {
       projectInfo =
         "No package.json found or unable to read project information";
@@ -536,7 +498,6 @@ Dev Dependencies: ${
       .slice(0, 30) // Limit to first 30 files
       .join("\n");
 
-    // Get README if it exists
     let readmeContent = "";
     try {
       const readmeUri = vscode.Uri.joinPath(
@@ -546,7 +507,6 @@ Dev Dependencies: ${
       const readme = await vscode.workspace.fs.readFile(readmeUri);
       readmeContent = readme.toString().substring(0, 1000); // First 1000 chars
     } catch {
-      // README doesn't exist, that's okay
     }
 
     const contextPrompt = `I'm working on a project with the following information:
@@ -557,11 +517,10 @@ ${projectInfo}
 ## Key Files in Project (showing up to 30 files)
 ${fileList}
 
-${
-  readmeContent
-    ? `## README Content (first 1000 characters)\n${readmeContent}`
-    : ""
-}
+${readmeContent
+        ? `## README Content (first 1000 characters)\n${readmeContent}`
+        : ""
+      }
 
 ## Question
 ${question}`;
@@ -582,7 +541,6 @@ ${question}`;
   }
 }
 
-// Streaming function using fetch with ReadableStream
 async function queryPerplexityAPIStream(
   apiKey: string,
   prompt: string,
@@ -592,7 +550,7 @@ async function queryPerplexityAPIStream(
   const config = vscode.workspace.getConfiguration("perplexityAI");
   const model = config.get<string>(
     "model",
-    "llama-3.1-sonar-small-128k-online"
+    "sonar",
   );
   const maxTokens = config.get<number>("maxTokens", 1000);
 
@@ -725,7 +683,7 @@ class PerplexityChatProvider implements vscode.TreeDataProvider<ChatItem> {
     ChatItem | undefined | null | void
   > = this._onDidChangeTreeData.event;
 
-  constructor(private context: vscode.ExtensionContext) {}
+  constructor(private context: vscode.ExtensionContext) { }
 
   refresh(): void {
     this._onDidChangeTreeData.fire();
@@ -769,4 +727,4 @@ interface PerplexityResponse {
 }
 
 // This method is called when your extension is deactivated
-export function deactivate() {}
+export function deactivate() { }
